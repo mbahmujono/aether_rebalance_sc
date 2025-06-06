@@ -15,11 +15,17 @@ def moccasin_main():
     a_usdc_balance = a_usdc.balanceOf(boa.env.eoa)
     a_weth_balance = a_weth.balanceOf(boa.env.eoa)
 
+    print(f"Current Aave USDC balance: {a_usdc_balance / SIX_DECIMALS} USDC")
+    print(f"Current Aave WETH balance: {a_weth_balance / EIGHTEEN_DECIMALS} WETH")
+
     a_usdc_balance_normalized = a_usdc_balance / SIX_DECIMALS
     a_weth_balance_normalized = a_weth_balance / EIGHTEEN_DECIMALS
 
     usdc_value = a_usdc_balance_normalized * get_price("usdc_usd_price_feed")
     weth_value = a_weth_balance_normalized * get_price("eth_usd_price_feed")
+    
+    print(f"Current USDC value: ${usdc_value:.2f}")
+    print(f"Current WETH value: ${weth_value:.2f}")
 
     total_value = usdc_value + weth_value
     print(f"Current percent allocation of USDC: {usdc_value / total_value * 100:.2f}%")

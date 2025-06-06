@@ -21,19 +21,25 @@ def deposit_into_aave(
 
 def run_deposit_script(usdc, weth):
     active_network = get_active_network()
+    print("Connecting to Aave V3 pool...")
     aavev3_pool_address_provider = active_network.manifest_named(
         "aavev3_pool_address_provider"
     )
     pool_address: str = aavev3_pool_address_provider.getPool()
     pool_contract = active_network.manifest_named("pool", address=pool_address)
     # Deposit all USDC
+    print(f"Using Aave V3 pool contract at {pool_contract.address}")
+    print(f"Depositing ALL USDC into Aave V3 pool {pool_contract.address}...")
     usdc_balance = usdc.balanceOf(boa.env.eoa)
     if usdc_balance > 0:
         deposit_into_aave(pool_contract, usdc, usdc_balance)
+        print(f"Deposited {usdc_balance / 1e6} USDC into Aave V3 pool.")
     # Deposit all WETH
+    print(f"Depositing ALL WETH into Aave V3 pool {pool_contract.address}...")
     weth_balance = weth.balanceOf(boa.env.eoa)
     if weth_balance > 0:
         deposit_into_aave(pool_contract, weth, weth_balance)
+        print(f"Deposited {weth_balance / 1e18} WETH into Aave V3 pool.")
 
     (
         totalCollateralBase,

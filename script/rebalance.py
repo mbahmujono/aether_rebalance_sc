@@ -4,7 +4,7 @@ from moccasin.config import get_active_network, get_config, _Networks
 from boa.contracts.abi.abi_contract import ABIContract
 
 
-TARGET_ALLOCATIONS = {"usdc": 0.3, "weth": 0.7}
+TARGET_ALLOCATIONS = {"usdc": 0.5, "weth": 0.5}
 BUFFER = 0.1
 SIX_DECIMALS = 1_000_000
 EIGHTEEN_DECIMALS = 1_000_000_000_000_000_000
@@ -85,9 +85,14 @@ def rebalance(
 ):
     a_usdc_balance = a_usdc.balanceOf(boa.env.eoa)
     a_weth_balance = a_weth.balanceOf(boa.env.eoa)
+    
 
     a_usdc_balance_normalized = a_usdc_balance / SIX_DECIMALS
     a_weth_balance_normalized = a_weth_balance / EIGHTEEN_DECIMALS
+
+    print(f"Current Aave USDC balance: {a_usdc_balance_normalized} USDC")
+    print(f"Current Aave WETH balance: {a_weth_balance_normalized}")
+
 
     usdc_value = a_usdc_balance_normalized * get_price("usdc_usd_price_feed")
     weth_value = a_weth_balance_normalized * get_price("eth_usd_price_feed")
