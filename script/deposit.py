@@ -12,11 +12,50 @@ REFERRAL_CODE = 0
 def deposit_into_aave(
     pool_contract: ABIContract, token: VyperContract, amount: int
 ) -> int:
+    active_network = get_active_network()
     allowed_amount = token.allowance(boa.env.eoa, pool_contract.address)
     if allowed_amount < amount:
         token.approve(pool_contract.address, amount)
     print(f"Depositing {token.name()} into Aave contract {pool_contract.address}")
-    pool_contract.supply(token.address, amount, boa.env.eoa, REFERRAL_CODE)
+    if active_network.chain_id == 1:  # Ethereum Mainnet
+        print("Ethereum mainnet detected, using default supply method...")
+        pool_contract.supply(token.address, amount, boa.env.eoa, REFERRAL_CODE)
+    else: # L2 networks like Arbitrum
+        print("L2 network detected, using L2Pool supply method...")
+        l2_pool_contract = active_network.manifest_named("l2_pool", address=pool_contract.address)
+        deposit_into_aave_l2(l2_pool_contract, pool_contract, token, amount)
+
+def deposit_into_aave_l2(
+    l2_pool_contract: ABIContract, 
+    pool_contract: ABIContract,
+    token: VyperContract,
+    amount: int
+):
+    # Check allowance and approve if needed
+    allowed_amount = token.allowance(boa.env.eoa, pool_contract.address)
+    if allowed_amount < amount:
+        token.approve(pool_contract.address, amount)
+    
+    # Dynamically fetch the asset ID (index) from the reserve data
+    reserve_data = pool_contract.getReserveData(token.address)
+    asset_id = reserve_data.id
+    print(f"Fetched assetId from reserve data: {asset_id}")
+
+    print(f"Preparing to deposit {token.name()} using L2Pool (assetId: {asset_id})...")
+
+    # Shorten amount to uint128 to match L2Pool requirements
+    shortened_amount = amount & ((1 << 128) - 1)
+
+    # Manually encode calldata for L2Pool.supply
+    referral_code = 0
+    packed_data = asset_id | (shortened_amount << 16) | (referral_code << 144)
+    encoded_args = packed_data.to_bytes(32, byteorder="big")
+    
+    print(f"Encoded calldata: {encoded_args.hex()}")
+
+    # Call supply on L2Pool with manually packed calldata
+    l2_pool_contract.supply(encoded_args)
+    print(f"Deposited {amount / (1e6 if token.decimals() == 6 else 1e18)} {token.symbol()} using L2Pool.")
 
 
 def run_deposit_script(usdc, weth):
@@ -34,6 +73,7 @@ def run_deposit_script(usdc, weth):
     if usdc_balance > 0:
         deposit_into_aave(pool_contract, usdc, usdc_balance)
         print(f"Deposited {usdc_balance / 1e6} USDC into Aave V3 pool.")
+        
     # Deposit all WETH
     print(f"Depositing ALL WETH into Aave V3 pool {pool_contract.address}...")
     weth_balance = weth.balanceOf(boa.env.eoa)

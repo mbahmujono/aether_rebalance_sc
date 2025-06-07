@@ -9,11 +9,21 @@ def moccasin_main():
     run_deposit_script(
         usdc, weth
     )  # Probably redundant and uneeded... but just in case.
+    
+    starting_usdc_balance = usdc.balanceOf(boa.env.eoa)
+    starting_weth_balance = weth.balanceOf(boa.env.eoa)
+
+    print(f"Wallet after deposit USDC balance: {starting_usdc_balance / 1e6} USDC")
+    print(f"Wallet after deposit WETH balance: {starting_weth_balance / 1e18} WETH")
+    
     rebalance(usdc, weth, a_usdc, a_weth)
     run_deposit_script(usdc, weth)
 
     a_usdc_balance = a_usdc.balanceOf(boa.env.eoa)
     a_weth_balance = a_weth.balanceOf(boa.env.eoa)
+    
+    print(f"Wallet after rebalance USDC balance: {starting_usdc_balance / 1e6} USDC")
+    print(f"Wallet after rebalance WETH balance: {starting_weth_balance / 1e18} WETH")
 
     print(f"Current Aave USDC balance: {a_usdc_balance / SIX_DECIMALS} USDC")
     print(f"Current Aave WETH balance: {a_weth_balance / EIGHTEEN_DECIMALS} WETH")

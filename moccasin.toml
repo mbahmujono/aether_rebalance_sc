@@ -19,6 +19,7 @@ usdc = { abi = "abis/usdc.json" }
 uniswap_swap_router = { abi = "abis/uniswap_swap_router.json" }
 aavev3_pool_address_provider = { abi = "abis/aave3_pool_address_provider.json" }
 pool = { abi = "abis/pool.json" }
+l2pool = { abi = "abis/l2pool.json" }
 aave_protocol_data_provider = { abi = "abis/aave_protocol_data_provider.json" }
 eth_usd_price_feed = { abi = "abis/eth_usd_price_feed.json" }
 usdc_usd_price_feed = { abi = "abis/usdc_usd_price_feed.json" }
@@ -35,6 +36,8 @@ url = "$ARBITRUM_RPC_URL"
 chain_id = 42161
 fork = true
 is_zksync = false
+explorer_uri = "https://api.arbiscan.io"
+explorer_api_key = "$ARBISCAN_API_KEY"
 
 [networks.mainnet-fork.contracts]
 weth = { address = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" }
@@ -53,3 +56,5 @@ aavev3_pool_address_provider = {address = "0xa97684ead0e402dC232d5A977953DF7ECBa
 aave_protocol_data_provider = { address = "0x14496b405D62c24F91f04Cda1c69Dc526D56fDE5" }
 eth_usd_price_feed = { address = "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"}
 usdc_usd_price_feed = { address = "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"}
+l2_pool = { address = "0x794a61358D6845594F94dc1DB02A252b5b4814aD", abi = "abis/l2pool.json" }
+

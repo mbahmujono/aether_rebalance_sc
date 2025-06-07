@@ -61,6 +61,7 @@ def setup_script() -> Tuple[ABIContract, ABIContract, ABIContract, ABIContract]:
     
     token_prefix = "aEth" if active_network.chain_id == 1 else "aArb"
     for a_token in a_tokens:
+        print("Found aToken:", a_token[0])
         if a_token[0] == f"{token_prefix}USDC":
             print(f"Found aETHUSDC/aArbUSDC at {a_token[1]}")
             a_usdc = active_network.manifest_named("usdc", address=a_token[1])
