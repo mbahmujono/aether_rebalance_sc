@@ -1,11 +1,7 @@
-Thanks for providing the notebook and context. Based on your notebook and the intent of the project (`aether_rebalance_sc`), here's a clean and informative `README.md` you can add to your repository:
 
----
-
-````markdown
 # Aether Rebalance SC
 
-Automated portfolio rebalancing tool using [Moccasin](https://github.com/Cyfrin/moccasin) and Aave V3 on Arbitrum. This project simulates token deposit, lending, and rebalancing strategies on a forked mainnet network.
+Automated portfolio rebalancing tool using [Moccasin](https://github.com/Cyfrin/moccasin) and Aave V3 on Arbitrum. This project simulates token deposit, lending, and rebalancing strategies on a forked mainnet network. This repo is modified version of Cyfrin Updraft's Algorithmic Trading (https://github.com/Cyfrin/mox-algorithmic-trading-cu)
 
 ---
 
@@ -116,8 +112,6 @@ Current percent allocation of aWETH: 50.00%
 ## 📄 License
 
 MIT License
-
-```
 
 ---
 
