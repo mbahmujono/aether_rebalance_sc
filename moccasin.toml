@@ -3,7 +3,7 @@ src = "src"
 out = "out"
 dot_env = ".env"
 save_abi_path = "abis"
-default_network_name = "mainnet-fork"
+default_network_name = "arbitrum-fork"
 name = "moccasin_project"
 version = "0.1.0"
 description = "Add your description here"
@@ -31,6 +31,12 @@ chain_id = 1
 fork = true
 is_zksync = false
 
+# [networks.sepolia-live]
+# url = "$SEPOLIA_RPC_URL"
+# chain_id = 
+# fork = false
+# is_zksync = false
+
 [networks.arbitrum-fork]
 url = "$ARBITRUM_RPC_URL"
 chain_id = 42161
@@ -50,7 +56,7 @@ usdc_usd_price_feed = { address = "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6" }
 
 [networks.arbitrum-fork.contracts]
 weth = { address = "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"}
-usdc = { address = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"}
+usdc = { address = "0xaf88d065e77c8cc2239327c5edb3a432268e5831"}
 uniswap_swap_router = { address = "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45"} #ini harusnya diubah ke universal router. pake contract lama. update uniswap
 aavev3_pool_address_provider = {address = "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"}
 aave_protocol_data_provider = { address = "0x14496b405D62c24F91f04Cda1c69Dc526D56fDE5" }
