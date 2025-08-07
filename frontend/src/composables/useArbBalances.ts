@@ -14,8 +14,8 @@ const erc20Abi = [
 const TOKEN_LIST = [
   { address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', symbolOverride: 'USDC' },
   { address: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1', symbolOverride: 'WETH' },
-  { address: "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f", symbolOverride: 'WBTC' },
-  { address: "0x1cff25B095cf6595afAbe35Dd7e5348666e57C11", symbolOverride: 'ETH' },
+  { address: "0x724dc807b04555b71ed48a6896b6f41593b8c637", symbolOverride: 'aUSDC' },
+  { address: "0xe50fA9b3c56FfB159cB0FCA61F5c9D750e8128c8", symbolOverride: 'aWETH' },
   // Add more token addresses here
 ]
 

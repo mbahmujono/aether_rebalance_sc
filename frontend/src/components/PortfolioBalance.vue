@@ -40,11 +40,28 @@ const fetchConversions = () => {
   <div>
     <button @click="fetchConversions">Convert to USD</button>
 
-    <ul v-if="converted.length">
-      <li v-for="token in converted" :key="token.symbol">
-        {{ token.symbol }}: {{ token.balance }} → USD {{ token.usdValue }}
-      </li>
-    </ul>
+    <!-- PortfolioBalance.vue (template section) -->
+    <table v-if="converted.length" class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-gray-50 font-medium">
+        <tr>
+          <th class="px-4 py-2 text-left">Token</th>
+          <th class="px-4 py-2 text-right">Balance</th>
+          <th class="px-4 py-2 text-right">USD&nbsp;Value</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-100">
+        <tr v-for="token in converted" :key="token.symbol">
+          <td class="px-4 py-2">{{ token.symbol }}</td>
+          <td class="px-4 py-2 text-right">{{ token.balance }}</td>
+          <!-- Use nullish-coalescing to guard against null -->
+          <td class="px-4 py-2 text-right">
+            {{ (token.usdValue ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2 }) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
 
     <div v-if="loading">Loading...</div>
     <div v-if="error">{{ error }}</div>
